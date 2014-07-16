@@ -52,7 +52,7 @@ namespace VSRename
         private static void RenameFiles(string path, string find, string replace_with)
         {
             Console.Write(".");
-            if (path.Contains(".svn") || path.Contains(".nuget") || path.Contains("packages")) return;
+            if (path.Contains(".svn") || path.Contains(".nuget") || path.Contains("packages") || path.Contains("obj") || path.Contains("bin")) return;
 
             var dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles("*.*");
@@ -61,8 +61,17 @@ namespace VSRename
                 string file_name = file.FullName;
                 if (file_name.Contains(find))
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Renaming {0} -> {1}", file_name, file_name.Replace(find, replace_with));
-                    File.Move(file_name, file_name.Replace(find, replace_with));
+                    try
+                    {
+                        File.Move(file_name, file_name.Replace(find, replace_with));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("ERROR: " + ex.Message);
+                    }
                 }
             }
 
@@ -76,10 +85,12 @@ namespace VSRename
                     Console.WriteLine(@"Renaming {0}\ -> {1}\", child_dir_name, child_dir_name_new);
                     try
                     {
+                        Console.WriteLine();
                         Directory.Move(child_dir_name, child_dir_name.Replace(find, replace_with));
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine();
                         Console.WriteLine("ERROR: " + ex.Message);
                     }
                     child_dir_name = child_dir_name_new;
@@ -91,7 +102,7 @@ namespace VSRename
         private static void RenameContent(string path, string modify_extension, string find, string replace_with)
         {
             Console.Write(".");
-            if (path.Contains(".svn") || path.Contains(".nuget") || path.Contains("packages")) return;
+            if (path.Contains(".svn") || path.Contains(".nuget") || path.Contains("packages") || path.Contains("obj") || path.Contains("bin")) return;
 
             var dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles("*." + modify_extension);
@@ -103,6 +114,7 @@ namespace VSRename
                     string content = File.ReadAllText(file_name);
                     if (content.Contains(find))
                     {
+                        Console.WriteLine();
                         Console.WriteLine(@"Renaming Contents of {0}", file_name);
 
                         while (content.Contains(find))
@@ -116,6 +128,7 @@ namespace VSRename
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine();
                             Console.WriteLine("ERROR: " + ex.Message);
                         }
                     }
