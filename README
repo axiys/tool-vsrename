@@ -1,14 +1,11 @@
-VSRename
-========
-Usage:
-	VSRename.exe <path> <find> <replace with> [<true - only search and replace file content> <only files with extension>]
+Rename Visual Studio projects, namespaces, filename and so on with ease.
 
 This allows you to rename Visual Studio projects. There are two stages in renaming projects:
 
 1) Rename directories and files (skipping .svn, .nuget and packages paths):
-	Example:
-			vsrename . OldProjectName NewProjectName
+	vsrename . OldProjectName NewProjectName
 
 2) Rename the content including solution to the new name  
-	Example: 
-		vsrename . OldProjectName NewProjectName true *.*
+	vsrename . OldProjectName NewProjectName true *.*
+
+VSRename.exe <path> <find> <replace with> [<true - only search and replace file content> <only files with extension>]
