@@ -22,7 +22,7 @@ namespace VSRename
 
             if (args.Length != 3 && args.Length != 5)
             {
-                Console.WriteLine("This renames folders and files with an option to rename contents of the file (ignores .git/ .svn/ .nuget/ packages/ obj/ bin/ paths)");
+                Console.WriteLine("This renames folders and files with an option to rename contents of the file (ignores .*/ packages/ obj/ bin/ paths)");
                 Console.WriteLine(
                     "Usage VSRename <path> <find> <replace with> [<true - modify file contents only> <extension>]");
                 return;
@@ -52,7 +52,7 @@ namespace VSRename
         private static void RenameFiles(string path, string find, string replace_with)
         {
             Console.Write(".");
-            if (path.Contains(".git") || path.Contains(".svn") || path.Contains(".nuget") || path.Contains("packages") || path.Contains("obj") || path.Contains("bin")) return;
+            if (Path.GetDirectoryName(path).StartsWith(".") || path.Contains("packages") || path.Contains("obj") || path.Contains("bin")) return;
 
             var dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles("*.*");
@@ -102,7 +102,7 @@ namespace VSRename
         private static void RenameContent(string path, string modify_extension, string find, string replace_with)
         {
             Console.Write(".");
-            if (path.Contains(".git") || path.Contains(".svn") || path.Contains(".nuget") || path.Contains("packages") || path.Contains("obj") || path.Contains("bin")) return;
+            if (Path.GetDirectoryName(path).StartsWith(".") || path.Contains("packages") || path.Contains("obj") || path.Contains("bin")) return;
 
             var dir = new DirectoryInfo(path);
             FileInfo[] files = dir.GetFiles("*." + modify_extension);
