@@ -2,7 +2,7 @@ Rename Visual Studio projects, namespaces, filename and so on with ease.
 
 This allows you to rename Visual Studio projects. There are two stages in renaming projects:
 
-1) Rename directories and files (ignores .*/ packages/ obj/ bin/ paths):
+1) Rename directories and files (ignores .git/ .vs/ .svn/ .nuget/ packages/ obj/ bin/ paths):
 	vsrename . OldProjectName NewProjectName
 
 2) Rename the content including solution to the new name  
